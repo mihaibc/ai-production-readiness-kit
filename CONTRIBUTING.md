@@ -11,6 +11,7 @@ This project is meant to help teams assess whether AI workflows are ready for pr
 - Improve validation and error messages.
 - Add tests for CLI behavior, scoring, report generation, or schema validation.
 - Improve report templates for executive, balanced, or engineering audiences.
+- Improve JSON output, CI gates, schema export, comparison, or remediation workflows.
 - Fix bugs in parsing, scoring, packaging, or CLI commands.
 
 ## Contribution Principles

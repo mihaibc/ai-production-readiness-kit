@@ -1,21 +1,33 @@
 from __future__ import annotations
 
+import json
 from importlib.resources import files
 from pathlib import Path
 from typing import Annotated
 
 import typer
-from rich.console import Console
-from rich.table import Table
 
-from aipr.models import ReportStyle, UseCase
+from aipr.comparison import compare_payload
+from aipr.gates import evaluate_gate
+from aipr.models import OutputFormat, ReportStyle, UseCase
+from aipr.remediation import remediation_items
+from aipr.rendering import (
+    assessment_payload,
+    console,
+    print_assessment_summary,
+    print_category_explanation,
+    print_comparison,
+    print_json,
+    print_remediation_plan,
+    print_validation_error,
+)
 from aipr.report import render_report, write_report
 from aipr.scoring import assess
 from aipr.validation import UseCaseValidationError, load_usecase, validate_usecase_file
 
 app = typer.Typer(help="Assess whether an AI workflow is ready for production.")
-console = Console()
 STARTER_TEMPLATE_ROOT = "starter_templates"
+BLANK_TEMPLATE_PATH = ("templates", "usecase_blank.yaml")
 
 
 def load_usecase_or_exit(path: Path) -> UseCase:
@@ -26,47 +38,49 @@ def load_usecase_or_exit(path: Path) -> UseCase:
         raise typer.Exit(1) from exc
 
 
-def print_validation_error(exc: UseCaseValidationError) -> None:
-    console.print(f"[bold red]Invalid use case YAML:[/bold red] {exc.message}")
-    for hint in exc.hints:
-        console.print(f"- {hint}")
-
-
 @app.command()
 def init(
     template: Annotated[str, typer.Option(help="Example template to copy.")] = "document-ingestion-quality-monitor",
     output: Annotated[Path, typer.Option(help="Destination YAML path.")] = Path("usecase.yaml"),
     overwrite: Annotated[bool, typer.Option(help="Overwrite an existing output file.")] = False,
+    blank: Annotated[bool, typer.Option(help="Create a blank starter instead of copying an example.")] = False,
 ) -> None:
     """Create a starter usecase.yaml file."""
-    source = files("aipr").joinpath(STARTER_TEMPLATE_ROOT, template, "usecase.yaml")
+    source = (
+        files("aipr").joinpath(*BLANK_TEMPLATE_PATH)
+        if blank
+        else files("aipr").joinpath(STARTER_TEMPLATE_ROOT, template, "usecase.yaml")
+    )
     if not source.is_file():
         available = ", ".join(list_templates())
         raise typer.BadParameter(f"Unknown template '{template}'. Available templates: {available}")
     if output.exists() and not overwrite:
         raise typer.BadParameter(f"{output} already exists. Use --overwrite to replace it.")
     output.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
-    console.print(f"Created [bold]{output}[/bold] from template [bold]{template}[/bold].")
+    source_name = "blank starter" if blank else f"template [bold]{template}[/bold]"
+    console.print(f"Created [bold]{output}[/bold] from {source_name}.")
 
 
 @app.command("assess")
-def assess_command(path: Annotated[Path, typer.Argument(help="Path to usecase.yaml.")]) -> None:
+def assess_command(
+    path: Annotated[Path, typer.Argument(help="Path to usecase.yaml.")],
+    format: Annotated[OutputFormat, typer.Option(help="Output format: text or json.")] = "text",
+    min_score: Annotated[int | None, typer.Option(help="Fail if the score is below this value.")] = None,
+    fail_on_critical: Annotated[bool, typer.Option(help="Fail if any critical finding exists.")] = False,
+) -> None:
     """Score an AI use case and print the readiness summary."""
     assessment = assess(load_usecase_or_exit(path))
-    console.print(f"[bold]AI Production Readiness Score:[/bold] {assessment.total_score} / 100")
-    console.print(f"[bold]Risk level:[/bold] {assessment.risk_level} / {assessment.risk_summary}")
-
-    table = Table(title="Score Breakdown")
-    table.add_column("Category")
-    table.add_column("Score", justify="right")
-    for category in assessment.categories:
-        table.add_row(category.name, f"{category.score:g} / {category.max_score}")
-    console.print(table)
-
-    if assessment.findings:
-        console.print("[bold]Top risks[/bold]")
-        for index, finding in enumerate(assessment.findings[:5], start=1):
-            console.print(f"{index}. {finding.severity.upper()}: {finding.message}")
+    gate = evaluate_gate(assessment, min_score=min_score, fail_on_critical=fail_on_critical)
+    if format == "json":
+        print_json(assessment_payload(assessment, gate=gate))
+    else:
+        print_assessment_summary(assessment)
+        if gate["failures"]:
+            console.print("[bold red]Gate failed[/bold red]")
+            for failure in gate["failures"]:
+                console.print(f"- {failure}")
+    if not gate["passed"]:
+        raise typer.Exit(1)
 
 
 @app.command()
@@ -110,25 +124,7 @@ def explain(
             console.print(f"Available categories: {available}")
             raise typer.Exit(1)
 
-    category_names = {item.name for item in categories}
-    for item in categories:
-        console.print(f"[bold]{item.name}:[/bold] {item.score:g} / {item.max_score}")
-        console.print(f"  {item.rationale}")
-        table = Table(show_header=True)
-        table.add_column("Field")
-        table.add_column("Value")
-        table.add_column("Score", justify="right")
-        for detail in item.details:
-            table.add_row(detail.field, detail.value, f"{detail.score:g} / {detail.max_score:g}")
-        console.print(table)
-    findings = [
-        finding for finding in assessment.findings if not category or finding.category in category_names
-    ]
-    if findings:
-        console.print("\n[bold]Findings[/bold]")
-        for finding in findings:
-            console.print(f"- {finding.severity.upper()}: {finding.message}")
-            console.print(f"  Recommendation: {finding.recommendation}")
+    print_category_explanation(categories, assessment.findings)
 
 
 @app.command()
@@ -152,6 +148,52 @@ def validate(
             raise typer.Exit(1)
     else:
         console.print("No completeness warnings found.")
+
+
+@app.command()
+def remediation(
+    path: Annotated[Path, typer.Argument(help="Path to usecase.yaml.")],
+    format: Annotated[OutputFormat, typer.Option(help="Output format: text or json.")] = "text",
+) -> None:
+    """Generate a prioritized remediation plan."""
+    assessment = assess(load_usecase_or_exit(path))
+    items = remediation_items(assessment)
+    if format == "json":
+        print_json({"usecase": assessment.usecase.name, "score": assessment.total_score, "items": items})
+        return
+
+    print_remediation_plan(assessment, items)
+
+
+@app.command()
+def schema(
+    output: Annotated[Path | None, typer.Option(help="Write JSON Schema to this path.")] = None,
+) -> None:
+    """Export the usecase.yaml JSON Schema."""
+    schema_text = json.dumps(UseCase.model_json_schema(), indent=2)
+    if output is None:
+        console.print(schema_text)
+        return
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(schema_text + "\n", encoding="utf-8")
+    console.print(f"Wrote schema to [bold]{output}[/bold].")
+
+
+@app.command()
+def compare(
+    before: Annotated[Path, typer.Argument(help="Earlier usecase.yaml.")],
+    after: Annotated[Path, typer.Argument(help="Later usecase.yaml.")],
+    format: Annotated[OutputFormat, typer.Option(help="Output format: text or json.")] = "text",
+) -> None:
+    """Compare two readiness assessments."""
+    before_assessment = assess(load_usecase_or_exit(before))
+    after_assessment = assess(load_usecase_or_exit(after))
+    payload = compare_payload(before_assessment, after_assessment)
+    if format == "json":
+        print_json(payload)
+        return
+
+    print_comparison(before_assessment, after_assessment, payload)
 
 
 @app.command()

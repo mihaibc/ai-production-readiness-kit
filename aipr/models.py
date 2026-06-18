@@ -7,6 +7,7 @@ from pydantic import BaseModel, ConfigDict, Field
 Status = bool | Literal["partial", "unknown"]
 Impact = Literal["high", "medium", "low", "none", "unknown"]
 ReportStyle = Literal["balanced", "executive", "engineering"]
+OutputFormat = Literal["text", "json"]
 
 
 class FlexibleModel(BaseModel):

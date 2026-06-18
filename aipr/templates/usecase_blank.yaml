@@ -1,0 +1,75 @@
+name: New AI Workflow
+owner: Team or role accountable for the workflow
+stage: idea
+description: >
+  Briefly describe the workflow, where it is used, and what boundary this
+  assessment covers.
+
+business:
+  problem: Describe the workflow problem this AI use case solves.
+  expected_impact: Describe the expected business, quality, speed, or risk impact.
+  users:
+    - Primary user group
+  external_output: false
+  revenue_or_cost_impact: unknown
+
+data:
+  sources:
+    - Primary data or document source
+  data_classification: unknown
+  freshness_required: false
+  access_control_required: false
+  pii_or_sensitive_data: false
+
+rag:
+  uses_rag: false
+  chunking_strategy_defined: false
+  source_citations_required: false
+  retrieval_evaluation_exists: false
+  rbac_filtered_retrieval: false
+
+model_architecture:
+  providers:
+    - Model provider or internal model interface
+  model_router: false
+  fallback_model: false
+  prompt_versioning: false
+  business_logic_in_prompts: false
+
+governance:
+  rbacs_defined: false
+  audit_logs: false
+  privacy_review_done: false
+  legal_review_done: false
+  compliance_gates: false
+
+human_in_the_loop:
+  required: false
+  approval_before_external_use: false
+  escalation_defined: false
+  reviewer_role: ""
+
+evals:
+  golden_dataset_exists: false
+  regression_tests: false
+  hallucination_tests: false
+  safety_tests: false
+
+observability:
+  token_tracking: false
+  latency_tracking: false
+  error_tracking: false
+  cost_dashboard: false
+  prompt_response_tracing: false
+
+operations:
+  incident_owner_defined: false
+  rollback_plan: false
+  support_process: false
+  change_management: false
+
+adoption:
+  training_materials: false
+  user_guides: false
+  feedback_loop: false
+  adoption_metrics: false

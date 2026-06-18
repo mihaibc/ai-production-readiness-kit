@@ -29,12 +29,15 @@ It is intentionally deterministic. It does not call an LLM API, route data to a 
 ## Quickstart
 
 ```bash
-pip install ai-production-readiness-kit
+uv tool install git+https://github.com/YOUR-USERNAME/ai-production-readiness-kit.git
 
 aipr init --template document-ingestion-quality-monitor
+aipr validate usecase.yaml
 aipr assess usecase.yaml
 aipr report usecase.yaml --style balanced --output report.md
 ```
+
+Replace `YOUR-USERNAME` with the GitHub owner of this repository. PyPI publishing can be added later.
 
 For local development:
 
@@ -60,11 +63,14 @@ Top risks
 
 ```bash
 aipr init --template document-ingestion-quality-monitor
+aipr validate examples/document-ingestion-quality-monitor/usecase.yaml
+aipr validate examples/document-ingestion-quality-monitor/usecase.yaml --strict
 aipr assess examples/document-ingestion-quality-monitor/usecase.yaml
 aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style balanced --output reports/document-ingestion-report.md
 aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style executive --output reports/document-ingestion-executive.md
 aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style engineering --output reports/document-ingestion-engineering.md
 aipr explain examples/document-ingestion-quality-monitor/usecase.yaml
+aipr explain examples/document-ingestion-quality-monitor/usecase.yaml --category evals
 aipr templates
 ```
 
@@ -130,6 +136,8 @@ This kit turns those concerns into a repeatable assessment that creates a better
 - `aipr/` - Python package, CLI, scoring engine, templates
 - `.github/workflows/ci.yml` - GitHub Actions checks for lint, tests, and package build
 - `docs/` - practical templates and checklists
+- `docs/11-usecase-yaml-schema.md` - schema reference for `usecase.yaml`
+- `docs/12-github-action-usage.md` - example CI usage for downstream repositories
 - `examples/` - synthetic AI workflow examples with generated reports
 - `tests/` - focused tests for scoring, CLI behavior, and report generation
 

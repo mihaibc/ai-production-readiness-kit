@@ -31,6 +31,8 @@ def test_report_styles_render_different_outputs() -> None:
     assert "Required Decisions" in executive
     assert engineering.startswith("# Engineering AI Production Readiness Report")
     assert "Control Inputs" in engineering
+    assert "Scoring Inputs" in engineering
+    assert "evals.golden_dataset_exists" in engineering
     assert balanced.startswith("# AI Production Readiness Report")
 
 

@@ -106,12 +106,21 @@ class UseCase(FlexibleModel):
     adoption: Adoption = Field(default_factory=Adoption)
 
 
+class ScoreContribution(BaseModel):
+    field: str
+    label: str
+    value: str
+    score: float
+    max_score: float
+
+
 class CategoryScore(BaseModel):
     name: str
     key: str
     score: float
     max_score: int
     rationale: str
+    details: list[ScoreContribution] = Field(default_factory=list)
 
 
 class Finding(BaseModel):

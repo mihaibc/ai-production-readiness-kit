@@ -17,6 +17,19 @@ Production gate: {{ assessment.production_gate }}
 | {{ category.name }} | {{ "%g"|format(category.score) }} / {{ category.max_score }} | {{ category.rationale }} |
 {% endfor %}
 
+## Scoring Inputs
+
+{% for category in assessment.categories -%}
+### {{ category.name }}
+
+| Field | Value | Score |
+|---|---|---:|
+{% for detail in category.details -%}
+| {{ detail.field }} | {{ detail.value }} | {{ "%g"|format(detail.score) }} / {{ "%g"|format(detail.max_score) }} |
+{% endfor %}
+
+{% endfor %}
+
 ## Critical Findings
 
 {% if assessment.critical_findings -%}

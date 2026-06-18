@@ -1,0 +1,10 @@
+# Remediation Plan: {{ usecase.name }}
+
+{% for finding in assessment.findings -%}
+## {{ finding.category }}
+
+{{ finding.message }}
+
+Recommended action: {{ finding.recommendation }}
+
+{% endfor %}

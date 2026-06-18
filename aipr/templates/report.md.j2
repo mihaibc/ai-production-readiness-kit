@@ -1,0 +1,55 @@
+# AI Production Readiness Report: {{ usecase.name }}
+
+## Executive Summary
+
+Score: {{ assessment.total_score }} / 100  
+Risk level: {{ assessment.risk_level }} - {{ assessment.risk_summary }}.
+Production gate: {{ assessment.production_gate }}
+
+{{ usecase.description }}
+
+## Score Breakdown
+
+| Category | Score |
+|---|---:|
+{% for category in assessment.categories -%}
+| {{ category.name }} | {{ "%g"|format(category.score) }} / {{ category.max_score }} |
+{% endfor %}
+
+## Critical Findings
+
+{% set critical = assessment.critical_findings -%}
+{% if critical -%}
+{% for finding in critical -%}
+{{ loop.index }}. {{ finding.message }}
+{% endfor -%}
+{% else -%}
+No critical findings were identified.
+{% endif %}
+
+## Warnings
+
+{% set warnings = assessment.warnings -%}
+{% if warnings -%}
+{% for finding in warnings -%}
+{{ loop.index }}. {{ finding.message }}
+{% endfor -%}
+{% else -%}
+No warnings were identified.
+{% endif %}
+
+## Recommended Remediation Plan
+
+{% for step in assessment.recommended_next_steps -%}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+## Use Case Context
+
+| Field | Value |
+|---|---|
+| Owner | {{ usecase.owner or "Not specified" }} |
+| Stage | {{ usecase.stage }} |
+| External output | {{ usecase.business.external_output }} |
+| Data classification | {{ usecase.data.data_classification }} |
+| Uses RAG | {{ usecase.rag.uses_rag }} |

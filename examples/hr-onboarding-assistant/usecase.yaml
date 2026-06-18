@@ -1,0 +1,79 @@
+name: HR Onboarding Assistant
+owner: People Operations
+stage: limited_production
+description: >
+  Internal assistant that answers onboarding questions using approved HR policies,
+  IT setup instructions, benefits guidance, and office information.
+
+business:
+  problem: New employees ask repeated onboarding questions across multiple channels.
+  expected_impact: Reduce repetitive HR and IT support questions during the first 30 days.
+  users:
+    - New employees
+    - HR coordinators
+    - IT support
+  external_output: false
+  revenue_or_cost_impact: low
+
+data:
+  sources:
+    - HR handbook
+    - IT onboarding guide
+    - Benefits FAQ
+  data_classification: internal
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: false
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: true
+  source_citations_required: true
+  retrieval_evaluation_exists: true
+  rbac_filtered_retrieval: true
+
+model_architecture:
+  providers:
+    - Azure OpenAI
+  model_router: partial
+  fallback_model: partial
+  prompt_versioning: true
+  business_logic_in_prompts: false
+
+governance:
+  rbacs_defined: true
+  audit_logs: true
+  privacy_review_done: true
+  legal_review_done: partial
+  compliance_gates: partial
+
+human_in_the_loop:
+  required: false
+  approval_before_external_use: false
+  escalation_defined: true
+  reviewer_role: HR Coordinator
+
+evals:
+  golden_dataset_exists: true
+  regression_tests: true
+  hallucination_tests: partial
+  safety_tests: true
+
+observability:
+  token_tracking: true
+  latency_tracking: true
+  error_tracking: true
+  cost_dashboard: true
+  prompt_response_tracing: partial
+
+operations:
+  incident_owner_defined: true
+  rollback_plan: true
+  support_process: true
+  change_management: partial
+
+adoption:
+  training_materials: true
+  user_guides: true
+  feedback_loop: true
+  adoption_metrics: partial

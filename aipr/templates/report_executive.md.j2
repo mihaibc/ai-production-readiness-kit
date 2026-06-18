@@ -1,0 +1,48 @@
+# Executive AI Readiness Brief: {{ usecase.name }}
+
+## Decision Summary
+
+Score: {{ assessment.total_score }} / 100  
+Readiness: {{ assessment.risk_level }} - {{ assessment.risk_summary }}  
+Production gate: {{ assessment.production_gate }}
+
+{% if assessment.critical_findings -%}
+Recommendation: do not approve broad production rollout until the critical findings below are resolved.
+{% elif assessment.total_score >= 75 -%}
+Recommendation: approve controlled production use with the remediation actions below tracked to closure.
+{% else -%}
+Recommendation: keep this workflow in pilot while the highest-risk controls are improved.
+{% endif %}
+
+## Business Context
+
+{{ usecase.description }}
+
+Owner: {{ usecase.owner or "Not specified" }}  
+Stage: {{ usecase.stage }}  
+External output: {{ usecase.business.external_output }}  
+Data classification: {{ usecase.data.data_classification }}
+
+## Top Executive Risks
+
+{% if assessment.findings -%}
+{% for finding in assessment.findings[:5] -%}
+{{ loop.index }}. {{ finding.severity|upper }} - {{ finding.message }}
+{% endfor -%}
+{% else -%}
+No material risks were identified by the current scorecard.
+{% endif %}
+
+## Required Decisions
+
+{% for step in assessment.recommended_next_steps -%}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+## Score Snapshot
+
+| Area | Score |
+|---|---:|
+{% for category in assessment.categories -%}
+| {{ category.name }} | {{ "%g"|format(category.score) }} / {{ category.max_score }} |
+{% endfor %}

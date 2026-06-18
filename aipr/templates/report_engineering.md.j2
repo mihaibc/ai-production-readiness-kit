@@ -1,0 +1,107 @@
+# Engineering AI Production Readiness Report: {{ usecase.name }}
+
+## Summary
+
+Score: {{ assessment.total_score }} / 100  
+Base risk: {{ assessment.base_risk_level }} - {{ assessment.base_risk_summary }}  
+Effective risk: {{ assessment.risk_level }} - {{ assessment.risk_summary }}  
+Production gate: {{ assessment.production_gate }}
+
+{{ usecase.description }}
+
+## Category Detail
+
+| Category | Score | Rationale |
+|---|---:|---|
+{% for category in assessment.categories -%}
+| {{ category.name }} | {{ "%g"|format(category.score) }} / {{ category.max_score }} | {{ category.rationale }} |
+{% endfor %}
+
+## Critical Findings
+
+{% if assessment.critical_findings -%}
+{% for finding in assessment.critical_findings -%}
+### {{ loop.index }}. {{ finding.category }}
+
+{{ finding.message }}
+
+Remediation: {{ finding.recommendation }}
+
+{% endfor -%}
+{% else -%}
+No critical findings were identified.
+{% endif %}
+
+## Warnings
+
+{% if assessment.warnings -%}
+{% for finding in assessment.warnings -%}
+### {{ loop.index }}. {{ finding.category }}
+
+{{ finding.message }}
+
+Remediation: {{ finding.recommendation }}
+
+{% endfor -%}
+{% else -%}
+No warnings were identified.
+{% endif %}
+
+## Control Inputs
+
+### Business
+
+- Problem: {{ usecase.business.problem or "Not specified" }}
+- Expected impact: {{ usecase.business.expected_impact or "Not specified" }}
+- Users: {{ usecase.business.users|join(", ") if usecase.business.users else "Not specified" }}
+- External output: {{ usecase.business.external_output }}
+- Revenue or cost impact: {{ usecase.business.revenue_or_cost_impact }}
+
+### Data
+
+- Sources: {{ usecase.data.sources|join(", ") if usecase.data.sources else "Not specified" }}
+- Classification: {{ usecase.data.data_classification }}
+- Freshness required: {{ usecase.data.freshness_required }}
+- Access control required: {{ usecase.data.access_control_required }}
+- PII or sensitive data: {{ usecase.data.pii_or_sensitive_data }}
+
+### RAG
+
+- Uses RAG: {{ usecase.rag.uses_rag }}
+- Chunking strategy defined: {{ usecase.rag.chunking_strategy_defined }}
+- Source citations required: {{ usecase.rag.source_citations_required }}
+- Retrieval evaluation exists: {{ usecase.rag.retrieval_evaluation_exists }}
+- RBAC-filtered retrieval: {{ usecase.rag.rbac_filtered_retrieval }}
+
+### Model Architecture
+
+- Providers: {{ usecase.model_architecture.providers|join(", ") if usecase.model_architecture.providers else "Not specified" }}
+- Model router: {{ usecase.model_architecture.model_router }}
+- Fallback model: {{ usecase.model_architecture.fallback_model }}
+- Prompt versioning: {{ usecase.model_architecture.prompt_versioning }}
+- Business logic in prompts: {{ usecase.model_architecture.business_logic_in_prompts }}
+
+### Governance
+
+- RBAC defined: {{ usecase.governance.rbacs_defined }}
+- Audit logs: {{ usecase.governance.audit_logs }}
+- Privacy review done: {{ usecase.governance.privacy_review_done }}
+- Legal review done: {{ usecase.governance.legal_review_done }}
+- Compliance gates: {{ usecase.governance.compliance_gates }}
+
+### Evals and Operations
+
+- Golden dataset exists: {{ usecase.evals.golden_dataset_exists }}
+- Regression tests: {{ usecase.evals.regression_tests }}
+- Hallucination tests: {{ usecase.evals.hallucination_tests }}
+- Safety tests: {{ usecase.evals.safety_tests }}
+- Incident owner defined: {{ usecase.operations.incident_owner_defined }}
+- Rollback plan: {{ usecase.operations.rollback_plan }}
+- Support process: {{ usecase.operations.support_process }}
+- Change management: {{ usecase.operations.change_management }}
+
+## Remediation Backlog
+
+{% for step in assessment.recommended_next_steps -%}
+{{ loop.index }}. {{ step }}
+{% endfor %}

@@ -1,0 +1,79 @@
+name: Legal Contract Review Assistant
+owner: Legal Operations
+stage: controlled_pilot
+description: >
+  AI-assisted workflow for summarizing contract clauses, flagging deviations from
+  standard terms, and preparing review notes for legal counsel.
+
+business:
+  problem: Legal review queues are slow because common deviations are identified manually.
+  expected_impact: Shorten first-pass review while preserving legal accountability.
+  users:
+    - Legal Counsel
+    - Procurement
+    - Sales Operations
+  external_output: false
+  revenue_or_cost_impact: medium
+
+data:
+  sources:
+    - Contract templates
+    - Redline playbooks
+    - Approved clause library
+  data_classification: restricted
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: true
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: partial
+  source_citations_required: true
+  retrieval_evaluation_exists: partial
+  rbac_filtered_retrieval: true
+
+model_architecture:
+  providers:
+    - Azure OpenAI
+  model_router: false
+  fallback_model: partial
+  prompt_versioning: true
+  business_logic_in_prompts: true
+
+governance:
+  rbacs_defined: true
+  audit_logs: true
+  privacy_review_done: true
+  legal_review_done: true
+  compliance_gates: true
+
+human_in_the_loop:
+  required: true
+  approval_before_external_use: true
+  escalation_defined: true
+  reviewer_role: Legal Counsel
+
+evals:
+  golden_dataset_exists: partial
+  regression_tests: partial
+  hallucination_tests: true
+  safety_tests: true
+
+observability:
+  token_tracking: true
+  latency_tracking: partial
+  error_tracking: true
+  cost_dashboard: partial
+  prompt_response_tracing: true
+
+operations:
+  incident_owner_defined: partial
+  rollback_plan: false
+  support_process: partial
+  change_management: true
+
+adoption:
+  training_materials: partial
+  user_guides: true
+  feedback_loop: true
+  adoption_metrics: partial

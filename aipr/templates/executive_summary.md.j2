@@ -1,0 +1,8 @@
+# Executive Summary: {{ usecase.name }}
+
+Score: {{ assessment.total_score }} / 100  
+Risk level: {{ assessment.risk_level }} - {{ assessment.risk_summary }}
+
+{% for step in assessment.recommended_next_steps -%}
+- {{ step }}
+{% endfor %}

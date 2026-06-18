@@ -1,0 +1,79 @@
+name: RFQ Sales Assistant
+owner: Sales Operations
+stage: pilot
+description: >
+  AI-assisted workflow for finding past proposal content, drafting RFQ responses,
+  and routing them to solution architects for review before client submission.
+
+business:
+  problem: RFQ responses take too long because relevant knowledge is scattered.
+  expected_impact: Reduce response time from days to hours.
+  users:
+    - Sales
+    - Solution Architects
+    - Delivery Leads
+  external_output: true
+  revenue_or_cost_impact: high
+
+data:
+  sources:
+    - Previous proposals
+    - Technical solution documents
+    - Compliance notes
+  data_classification: confidential
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: true
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: true
+  source_citations_required: true
+  retrieval_evaluation_exists: false
+  rbac_filtered_retrieval: false
+
+model_architecture:
+  providers:
+    - Azure OpenAI
+  model_router: false
+  fallback_model: false
+  prompt_versioning: partial
+  business_logic_in_prompts: true
+
+governance:
+  rbacs_defined: partial
+  audit_logs: true
+  privacy_review_done: true
+  legal_review_done: true
+  compliance_gates: partial
+
+human_in_the_loop:
+  required: true
+  approval_before_external_use: true
+  escalation_defined: partial
+  reviewer_role: Solution Architect
+
+evals:
+  golden_dataset_exists: false
+  regression_tests: false
+  hallucination_tests: partial
+  safety_tests: partial
+
+observability:
+  token_tracking: true
+  latency_tracking: true
+  error_tracking: true
+  cost_dashboard: partial
+  prompt_response_tracing: partial
+
+operations:
+  incident_owner_defined: false
+  rollback_plan: false
+  support_process: partial
+  change_management: partial
+
+adoption:
+  training_materials: true
+  user_guides: true
+  feedback_loop: partial
+  adoption_metrics: false

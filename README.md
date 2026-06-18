@@ -2,6 +2,8 @@
 
 Most AI projects fail after the demo because nobody checks whether the workflow is ready for production.
 
+GitHub: [mihaibc/ai-production-readiness-kit](https://github.com/mihaibc/ai-production-readiness-kit)
+
 This project helps teams assess AI workflows across:
 
 - business value
@@ -28,8 +30,10 @@ It is intentionally deterministic. It does not call an LLM API, route data to a 
 
 ## Quickstart
 
+Install directly from GitHub:
+
 ```bash
-uv tool install git+https://github.com/YOUR-USERNAME/ai-production-readiness-kit.git
+uv tool install git+https://github.com/mihaibc/ai-production-readiness-kit.git
 
 aipr init --template document-ingestion-quality-monitor
 aipr validate usecase.yaml
@@ -37,13 +41,15 @@ aipr assess usecase.yaml
 aipr report usecase.yaml --style balanced --output report.md
 ```
 
-Replace `YOUR-USERNAME` with the GitHub owner of this repository. PyPI publishing can be added later.
+PyPI publishing is not enabled yet; GitHub install is the intended path for now.
 
 For local development:
 
 ```bash
-pip install -e ".[dev]"
-pytest
+git clone https://github.com/mihaibc/ai-production-readiness-kit.git
+cd ai-production-readiness-kit
+uv sync --extra dev
+uv run pytest
 ```
 
 ## Example Output
@@ -73,6 +79,8 @@ aipr explain examples/document-ingestion-quality-monitor/usecase.yaml
 aipr explain examples/document-ingestion-quality-monitor/usecase.yaml --category evals
 aipr templates
 ```
+
+Use `aipr validate --strict` in CI when missing ownership, business context, users, or data sources should fail the check.
 
 Available starter templates:
 
@@ -135,11 +143,31 @@ This kit turns those concerns into a repeatable assessment that creates a better
 
 - `aipr/` - Python package, CLI, scoring engine, templates
 - `.github/workflows/ci.yml` - GitHub Actions checks for lint, tests, and package build
+- `CONTRIBUTING.md` - contribution guidelines
+- `CODE_OF_CONDUCT.md` - community expectations
 - `docs/` - practical templates and checklists
 - `docs/11-usecase-yaml-schema.md` - schema reference for `usecase.yaml`
 - `docs/12-github-action-usage.md` - example CI usage for downstream repositories
 - `examples/` - synthetic AI workflow examples with generated reports
 - `tests/` - focused tests for scoring, CLI behavior, and report generation
+
+## Development Checks
+
+Run the same checks used by CI:
+
+```bash
+uv run ruff check .
+uv run pytest
+uv build
+```
+
+If your local environment has restricted cache permissions, use:
+
+```bash
+uv --cache-dir .uv-cache run ruff check .
+uv --cache-dir .uv-cache run pytest
+uv --cache-dir .uv-cache build
+```
 
 ## Roadmap
 

@@ -27,7 +27,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install AI Production Readiness Kit
-        run: uv tool install git+https://github.com/YOUR-USERNAME/ai-production-readiness-kit.git
+        run: uv tool install git+https://github.com/mihaibc/ai-production-readiness-kit.git
 
       - name: Validate use cases
         run: |
@@ -52,7 +52,7 @@ ai-use-cases/
 
 Keep use-case files close to the delivery work they govern. A pull request that changes a prompt, retrieval source, model, or workflow should update the matching readiness file when controls change.
 
-Replace `YOUR-USERNAME` with the GitHub owner of the repository. When the package is published to PyPI later, the install step can change to `uv tool install ai-production-readiness-kit`.
+When the package is published to PyPI later, the install step can change to `uv tool install ai-production-readiness-kit`.
 
 ## Recommended Policy
 

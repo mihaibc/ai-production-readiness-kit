@@ -1,0 +1,81 @@
+name: Document Ingestion Quality Monitor
+owner: Knowledge Platform Team
+stage: pilot
+description: >
+  AI-assisted document ingestion workflow that extracts metadata, chunks content,
+  detects duplicates, validates parsing quality, and flags failed or low-quality
+  documents before they enter a searchable knowledge base.
+
+business:
+  problem: Document search quality drops when ingestion failures, duplicate files, and missing metadata are not detected early.
+  expected_impact: Improve retrieval reliability by catching ingestion defects before documents are made searchable.
+  users:
+    - Knowledge platform engineers
+    - Content operations analysts
+    - Search quality reviewers
+  external_output: false
+  revenue_or_cost_impact: medium
+
+data:
+  sources:
+    - Synthetic PDF manuals
+    - Public sample policy documents
+    - Generated metadata test files
+    - Ingestion processing logs
+  data_classification: internal
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: false
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: true
+  source_citations_required: true
+  retrieval_evaluation_exists: partial
+  rbac_filtered_retrieval: partial
+
+model_architecture:
+  providers:
+    - Generic LLM provider
+  model_router: false
+  fallback_model: false
+  prompt_versioning: true
+  business_logic_in_prompts: false
+
+governance:
+  rbacs_defined: true
+  audit_logs: true
+  privacy_review_done: true
+  legal_review_done: false
+  compliance_gates: false
+
+human_in_the_loop:
+  required: true
+  approval_before_external_use: true
+  escalation_defined: false
+  reviewer_role: Content Quality Reviewer
+
+evals:
+  golden_dataset_exists: partial
+  regression_tests: partial
+  hallucination_tests: partial
+  safety_tests: partial
+
+observability:
+  token_tracking: true
+  latency_tracking: true
+  error_tracking: true
+  cost_dashboard: true
+  prompt_response_tracing: partial
+
+operations:
+  incident_owner_defined: partial
+  rollback_plan: false
+  support_process: true
+  change_management: partial
+
+adoption:
+  training_materials: true
+  user_guides: true
+  feedback_loop: partial
+  adoption_metrics: partial

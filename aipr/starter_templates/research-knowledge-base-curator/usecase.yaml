@@ -1,25 +1,27 @@
-name: HR Onboarding Assistant
-owner: People Operations
+name: Research Knowledge Base Curator
+owner: Research Operations Team
 stage: limited_production
 description: >
-  Internal assistant that answers onboarding questions using approved HR policies,
-  IT setup instructions, benefits guidance, and office information.
+  Internal workflow that ingests synthetic research notes, classifies topics,
+  identifies stale content, recommends archive or review actions, and maintains
+  a searchable knowledge base for research and product teams.
 
 business:
-  problem: New employees ask repeated onboarding questions across multiple channels.
-  expected_impact: Reduce repetitive HR and IT support questions during the first 30 days.
+  problem: Research notes become hard to reuse when topics, freshness, and ownership are not maintained.
+  expected_impact: Improve reuse of research knowledge and reduce duplicate discovery work.
   users:
-    - New employees
-    - HR coordinators
-    - IT support
+    - Researchers
+    - Product managers
+    - Knowledge managers
   external_output: false
-  revenue_or_cost_impact: low
+  revenue_or_cost_impact: medium
 
 data:
   sources:
-    - HR handbook
-    - IT onboarding guide
-    - Benefits FAQ
+    - Synthetic research notes
+    - Public sample interview summaries
+    - Topic taxonomy files
+    - Archive review logs
   data_classification: internal
   freshness_required: true
   access_control_required: true
@@ -34,7 +36,7 @@ rag:
 
 model_architecture:
   providers:
-    - Azure OpenAI
+    - Generic LLM provider
   model_router: partial
   fallback_model: partial
   prompt_versioning: true
@@ -51,7 +53,7 @@ human_in_the_loop:
   required: false
   approval_before_external_use: false
   escalation_defined: true
-  reviewer_role: HR Coordinator
+  reviewer_role: Knowledge Manager
 
 evals:
   golden_dataset_exists: true
@@ -76,4 +78,4 @@ adoption:
   training_materials: true
   user_guides: true
   feedback_loop: true
-  adoption_metrics: partial
+  adoption_metrics: true

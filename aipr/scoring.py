@@ -401,7 +401,7 @@ def recommended_next_steps(findings: list[Finding], categories: list[CategorySco
 
     weakest = sorted(categories, key=lambda category: category.score / category.max_score)
     for category in weakest:
-        step = f"Improve {category.name.lower()} controls before expanding production use."
+        step = f"Improve {category.name.lower()} before expanding production use."
         if step not in steps:
             steps.append(step)
         if len(steps) == 5:

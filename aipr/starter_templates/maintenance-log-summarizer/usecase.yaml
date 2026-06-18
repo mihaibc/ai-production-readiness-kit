@@ -1,0 +1,81 @@
+name: Maintenance Log Summarizer
+owner: Facilities Engineering Team
+stage: pilot
+description: >
+  AI-assisted workflow that summarizes synthetic equipment maintenance logs,
+  detects recurring issue patterns, and prepares review notes for maintenance
+  engineers before any operational action is taken.
+
+business:
+  problem: Maintenance teams spend too much time reading repetitive logs before identifying recurring issues.
+  expected_impact: Reduce review time and improve visibility into repeated maintenance patterns.
+  users:
+    - Maintenance engineers
+    - Facilities coordinators
+    - Reliability analysts
+  external_output: false
+  revenue_or_cost_impact: medium
+
+data:
+  sources:
+    - Synthetic maintenance logs
+    - Generated inspection notes
+    - Equipment reference sheets
+    - Work order status files
+  data_classification: internal
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: false
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: partial
+  source_citations_required: true
+  retrieval_evaluation_exists: partial
+  rbac_filtered_retrieval: true
+
+model_architecture:
+  providers:
+    - Generic LLM provider
+  model_router: partial
+  fallback_model: false
+  prompt_versioning: partial
+  business_logic_in_prompts: false
+
+governance:
+  rbacs_defined: true
+  audit_logs: partial
+  privacy_review_done: partial
+  legal_review_done: false
+  compliance_gates: partial
+
+human_in_the_loop:
+  required: true
+  approval_before_external_use: true
+  escalation_defined: true
+  reviewer_role: Maintenance Engineer
+
+evals:
+  golden_dataset_exists: partial
+  regression_tests: partial
+  hallucination_tests: partial
+  safety_tests: partial
+
+observability:
+  token_tracking: true
+  latency_tracking: true
+  error_tracking: true
+  cost_dashboard: partial
+  prompt_response_tracing: partial
+
+operations:
+  incident_owner_defined: partial
+  rollback_plan: partial
+  support_process: false
+  change_management: partial
+
+adoption:
+  training_materials: partial
+  user_guides: true
+  feedback_loop: true
+  adoption_metrics: partial

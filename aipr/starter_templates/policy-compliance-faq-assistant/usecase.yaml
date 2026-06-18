@@ -1,40 +1,42 @@
-name: Legal Contract Review Assistant
-owner: Legal Operations
+name: Policy Compliance FAQ Assistant
+owner: Internal Governance Team
 stage: controlled_pilot
 description: >
-  AI-assisted workflow for summarizing contract clauses, flagging deviations from
-  standard terms, and preparing review notes for legal counsel.
+  Internal assistant that answers questions from synthetic policy documents,
+  cites source sections, and escalates uncertain or compliance-sensitive
+  questions to a policy reviewer.
 
 business:
-  problem: Legal review queues are slow because common deviations are identified manually.
-  expected_impact: Shorten first-pass review while preserving legal accountability.
+  problem: Employees struggle to find consistent answers across policy documents and operating procedures.
+  expected_impact: Reduce repetitive policy questions while improving consistency and traceability of answers.
   users:
-    - Legal Counsel
-    - Procurement
-    - Sales Operations
+    - Operations managers
+    - Policy reviewers
+    - Internal support teams
   external_output: false
   revenue_or_cost_impact: medium
 
 data:
   sources:
-    - Contract templates
-    - Redline playbooks
-    - Approved clause library
-  data_classification: restricted
+    - Synthetic policy handbook
+    - Fictional operating procedures
+    - Public compliance guidance excerpts
+    - Escalation decision log
+  data_classification: internal
   freshness_required: true
   access_control_required: true
   pii_or_sensitive_data: true
 
 rag:
   uses_rag: true
-  chunking_strategy_defined: partial
+  chunking_strategy_defined: true
   source_citations_required: true
   retrieval_evaluation_exists: partial
   rbac_filtered_retrieval: true
 
 model_architecture:
   providers:
-    - Azure OpenAI
+    - Generic LLM provider
   model_router: false
   fallback_model: partial
   prompt_versioning: true
@@ -45,35 +47,35 @@ governance:
   audit_logs: true
   privacy_review_done: true
   legal_review_done: true
-  compliance_gates: true
+  compliance_gates: partial
 
 human_in_the_loop:
   required: true
   approval_before_external_use: true
   escalation_defined: true
-  reviewer_role: Legal Counsel
+  reviewer_role: Policy Reviewer
 
 evals:
   golden_dataset_exists: partial
   regression_tests: partial
   hallucination_tests: true
-  safety_tests: true
+  safety_tests: partial
 
 observability:
   token_tracking: true
-  latency_tracking: partial
+  latency_tracking: true
   error_tracking: true
   cost_dashboard: partial
   prompt_response_tracing: true
 
 operations:
   incident_owner_defined: partial
-  rollback_plan: false
+  rollback_plan: partial
   support_process: partial
   change_management: true
 
 adoption:
-  training_materials: partial
+  training_materials: true
   user_guides: true
   feedback_loop: true
   adoption_metrics: partial

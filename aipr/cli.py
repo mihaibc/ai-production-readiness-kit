@@ -27,7 +27,7 @@ def load_usecase(path: Path) -> UseCase:
 
 @app.command()
 def init(
-    template: Annotated[str, typer.Option(help="Example template to copy.")] = "rfq-assistant",
+    template: Annotated[str, typer.Option(help="Example template to copy.")] = "document-ingestion-quality-monitor",
     output: Annotated[Path, typer.Option(help="Destination YAML path.")] = Path("usecase.yaml"),
     overwrite: Annotated[bool, typer.Option(help="Overwrite an existing output file.")] = False,
 ) -> None:

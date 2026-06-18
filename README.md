@@ -31,7 +31,7 @@ It is intentionally deterministic. It does not call an LLM API, route data to a 
 ```bash
 pip install ai-production-readiness-kit
 
-aipr init --template rfq-assistant
+aipr init --template document-ingestion-quality-monitor
 aipr assess usecase.yaml
 aipr report usecase.yaml --style balanced --output report.md
 ```
@@ -46,28 +46,37 @@ pytest
 ## Example Output
 
 ```text
-AI Production Readiness Score: 64 / 100
-Risk level: High risk / Pilot only until critical controls are resolved
+AI Production Readiness Score: 73 / 100
+Risk level: Medium risk / Production only with additional controls
 
 Top risks
-1. CRITICAL: Retrieval quality is not validated against an evaluation set.
-2. CRITICAL: RAG uses sensitive data without fully defined RBAC-aware retrieval.
-3. WARNING: Sensitive data is in scope but RBAC is not fully defined.
-4. WARNING: Rollback plan is not fully defined.
-5. WARNING: Incident ownership is not fully defined.
+1. WARNING: Retrieval evaluation is incomplete.
+2. WARNING: Rollback plan is not fully defined.
+3. WARNING: Incident ownership is not fully defined.
+4. WARNING: No formal golden evaluation dataset is defined.
 ```
 
 ## CLI Commands
 
 ```bash
-aipr init --template rfq-assistant
-aipr assess examples/rfq-assistant/usecase.yaml
-aipr report examples/rfq-assistant/usecase.yaml --style balanced --output reports/rfq-report.md
-aipr report examples/rfq-assistant/usecase.yaml --style executive --output reports/rfq-executive.md
-aipr report examples/rfq-assistant/usecase.yaml --style engineering --output reports/rfq-engineering.md
-aipr explain examples/rfq-assistant/usecase.yaml
+aipr init --template document-ingestion-quality-monitor
+aipr assess examples/document-ingestion-quality-monitor/usecase.yaml
+aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style balanced --output reports/document-ingestion-report.md
+aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style executive --output reports/document-ingestion-executive.md
+aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style engineering --output reports/document-ingestion-engineering.md
+aipr explain examples/document-ingestion-quality-monitor/usecase.yaml
 aipr templates
 ```
+
+Available starter templates:
+
+- `document-ingestion-quality-monitor`
+- `maintenance-log-summarizer`
+- `policy-compliance-faq-assistant`
+- `research-knowledge-base-curator`
+- `supplier-risk-intake-screener`
+
+All examples are synthetic and intentionally generic. They are designed to show reusable production-readiness patterns without depending on confidential, customer-specific, or employer-specific workflows.
 
 ## Report Styles
 

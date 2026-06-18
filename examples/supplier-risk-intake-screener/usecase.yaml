@@ -1,0 +1,81 @@
+name: Supplier Risk Intake Screener
+owner: Procurement Risk Team
+stage: prototype
+description: >
+  AI-assisted workflow that reviews synthetic supplier intake forms and public-style
+  risk indicators to prepare an initial risk checklist for procurement review.
+  The workflow supports human decision-making and does not approve suppliers.
+
+business:
+  problem: Supplier intake reviews are inconsistent when risk signals and form responses are checked manually.
+  expected_impact: Improve consistency of first-pass supplier risk screening while preserving human approval.
+  users:
+    - Procurement analysts
+    - Risk reviewers
+    - Vendor management leads
+  external_output: true
+  revenue_or_cost_impact: high
+
+data:
+  sources:
+    - Synthetic supplier intake forms
+    - Public-style risk indicator summaries
+    - Generated procurement policy notes
+    - Reviewer disposition history
+  data_classification: confidential
+  freshness_required: true
+  access_control_required: true
+  pii_or_sensitive_data: true
+
+rag:
+  uses_rag: true
+  chunking_strategy_defined: partial
+  source_citations_required: true
+  retrieval_evaluation_exists: false
+  rbac_filtered_retrieval: partial
+
+model_architecture:
+  providers:
+    - Generic LLM provider
+  model_router: false
+  fallback_model: false
+  prompt_versioning: partial
+  business_logic_in_prompts: true
+
+governance:
+  rbacs_defined: partial
+  audit_logs: true
+  privacy_review_done: partial
+  legal_review_done: false
+  compliance_gates: false
+
+human_in_the_loop:
+  required: true
+  approval_before_external_use: false
+  escalation_defined: partial
+  reviewer_role: Procurement Risk Reviewer
+
+evals:
+  golden_dataset_exists: false
+  regression_tests: false
+  hallucination_tests: partial
+  safety_tests: partial
+
+observability:
+  token_tracking: partial
+  latency_tracking: true
+  error_tracking: true
+  cost_dashboard: false
+  prompt_response_tracing: partial
+
+operations:
+  incident_owner_defined: false
+  rollback_plan: false
+  support_process: partial
+  change_management: partial
+
+adoption:
+  training_materials: partial
+  user_guides: partial
+  feedback_loop: partial
+  adoption_metrics: false

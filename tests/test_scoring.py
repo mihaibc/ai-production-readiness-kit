@@ -6,18 +6,40 @@ from aipr.models import UseCase
 from aipr.scoring import assess
 
 
-def test_rfq_assistant_generates_medium_risk_findings() -> None:
-    data = yaml.safe_load(Path("examples/rfq-assistant/usecase.yaml").read_text())
+def test_document_ingestion_example_generates_medium_risk_warnings() -> None:
+    data = yaml.safe_load(Path("examples/document-ingestion-quality-monitor/usecase.yaml").read_text())
     usecase = UseCase.model_validate(data)
 
     assessment = assess(usecase)
 
     assert 0 <= assessment.total_score <= 100
     assert assessment.base_risk_level == "Medium risk"
+    assert assessment.risk_level == "Medium risk"
+    assert not assessment.critical_findings
+    assert any("Retrieval evaluation is incomplete" in finding.message for finding in assessment.findings)
+
+
+def test_supplier_risk_example_has_critical_production_gates() -> None:
+    data = yaml.safe_load(Path("examples/supplier-risk-intake-screener/usecase.yaml").read_text())
+    usecase = UseCase.model_validate(data)
+
+    assessment = assess(usecase)
+
     assert assessment.risk_level == "High risk"
     assert "Critical findings block" in assessment.production_gate
+    assert any("human approval gate" in finding.message for finding in assessment.findings)
     assert any("Retrieval quality" in finding.message for finding in assessment.findings)
-    assert any("RBAC-aware retrieval" in finding.message for finding in assessment.findings)
+
+
+def test_research_curator_scores_higher_than_supplier_risk_screener() -> None:
+    research_data = yaml.safe_load(Path("examples/research-knowledge-base-curator/usecase.yaml").read_text())
+    supplier_data = yaml.safe_load(Path("examples/supplier-risk-intake-screener/usecase.yaml").read_text())
+
+    research_assessment = assess(UseCase.model_validate(research_data))
+    supplier_assessment = assess(UseCase.model_validate(supplier_data))
+
+    assert research_assessment.total_score > supplier_assessment.total_score
+    assert not research_assessment.critical_findings
 
 
 def test_low_risk_internal_workflow_scores_higher_than_uncontrolled_external_workflow() -> None:

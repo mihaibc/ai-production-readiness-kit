@@ -8,19 +8,19 @@ from aipr.scoring import assess
 
 
 def test_report_contains_score_and_findings() -> None:
-    data = yaml.safe_load(Path("examples/rfq-assistant/usecase.yaml").read_text())
+    data = yaml.safe_load(Path("examples/document-ingestion-quality-monitor/usecase.yaml").read_text())
     assessment = assess(UseCase.model_validate(data))
 
     report = render_report(assessment)
 
-    assert "# AI Production Readiness Report: RFQ Sales Assistant" in report
+    assert "# AI Production Readiness Report: Document Ingestion Quality Monitor" in report
     assert "Score:" in report
     assert "Critical Findings" in report
     assert "Production gate:" in report
 
 
 def test_report_styles_render_different_outputs() -> None:
-    data = yaml.safe_load(Path("examples/rfq-assistant/usecase.yaml").read_text())
+    data = yaml.safe_load(Path("examples/document-ingestion-quality-monitor/usecase.yaml").read_text())
     assessment = assess(UseCase.model_validate(data))
 
     executive = render_report(assessment, style="executive")

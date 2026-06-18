@@ -1,12 +1,12 @@
-# AI Production Readiness Report: Legal Contract Review Assistant
+# AI Production Readiness Report: Policy Compliance FAQ Assistant
 
 ## Executive Summary
 
-Score: 81 / 100  
+Score: 82 / 100  
 Risk level: Production-ready - Minor gaps remain.
 Production gate: No critical production blockers identified.
 
-AI-assisted workflow for summarizing contract clauses, flagging deviations from standard terms, and preparing review notes for legal counsel.
+Internal assistant that answers questions from synthetic policy documents, cites source sections, and escalates uncertain or compliance-sensitive questions to a policy reviewer.
 
 
 ## Score Breakdown
@@ -15,14 +15,14 @@ AI-assisted workflow for summarizing contract clauses, flagging deviations from 
 |---|---:|
 | Business value and workflow fit | 9 / 10 |
 | Data readiness | 10 / 10 |
-| RAG / retrieval quality | 7.5 / 10 |
+| RAG / retrieval quality | 8.75 / 10 |
 | Model architecture | 5 / 10 |
-| Governance and security | 15 / 15 |
+| Governance and security | 13.5 / 15 |
 | Human-in-the-loop design | 10 / 10 |
-| Evals and quality assurance | 10.5 / 15 |
-| Observability and cost control | 8 / 10 |
-| Operations and ownership | 2.25 / 5 |
-| Adoption and enablement | 3.75 / 5 |
+| Evals and quality assurance | 9 / 15 |
+| Observability and cost control | 9 / 10 |
+| Operations and ownership | 3 / 5 |
+| Adoption and enablement | 4.5 / 5 |
 
 ## Critical Findings
 
@@ -34,8 +34,7 @@ No critical findings were identified.
 2. Rollback plan is not fully defined.
 3. Incident ownership is not fully defined.
 4. Business logic is embedded in prompts without a model routing or abstraction layer.
-5. Token, latency, or error tracking is incomplete.
-6. No formal golden evaluation dataset is defined.
+5. No formal golden evaluation dataset is defined.
 
 ## Recommended Remediation Plan
 
@@ -43,14 +42,14 @@ No critical findings were identified.
 2. Document how to disable the workflow, revert prompts/models, and notify affected users.
 3. Assign an operational owner for failures, escalations, and production changes.
 4. Version prompts and separate workflow rules from model-specific instructions.
-5. Track token use, latency, errors, and cost per workflow before broader rollout.
+5. Build representative examples with expected outputs and known failure modes.
 
 ## Use Case Context
 
 | Field | Value |
 |---|---|
-| Owner | Legal Operations |
+| Owner | Internal Governance Team |
 | Stage | controlled_pilot |
 | External output | False |
-| Data classification | restricted |
+| Data classification | internal |
 | Uses RAG | True |

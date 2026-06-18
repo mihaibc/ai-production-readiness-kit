@@ -38,7 +38,7 @@ jobs:
       - name: Assess use cases
         run: |
           for file in ai-use-cases/*.yaml; do
-            aipr assess "$file"
+            aipr assess "$file" --min-score 75 --fail-on-critical
           done
 ```
 
@@ -57,6 +57,8 @@ When the package is published to PyPI later, the install step can change to `uv 
 ## Recommended Policy
 
 - Use `aipr validate --strict` for schema and completeness checks.
-- Use `aipr assess` to show the score, risk level, top findings, and production gate.
+- Use `aipr assess --min-score 75 --fail-on-critical` to fail weak or blocked assessments.
+- Use `aipr assess --format json` when another CI step needs machine-readable output.
+- Use `aipr remediation usecase.yaml --format json` when a workflow should collect recommended actions.
 - Treat critical findings as launch blockers unless the risk is formally accepted.
 - Store generated reports as release artifacts only when the team needs review evidence; otherwise, use CLI output in CI.

@@ -36,8 +36,9 @@ Install directly from GitHub:
 uv tool install git+https://github.com/mihaibc/ai-production-readiness-kit.git
 
 aipr init --template document-ingestion-quality-monitor
+aipr init --blank --output usecase.yaml
 aipr validate usecase.yaml
-aipr assess usecase.yaml
+aipr assess usecase.yaml --min-score 70 --fail-on-critical
 aipr report usecase.yaml --style balanced --output report.md
 ```
 
@@ -52,13 +53,17 @@ uv sync --extra dev
 uv run pytest
 ```
 
-## Example Output
+## Example CLI Output
+
+The default terminal output is designed for humans reviewing an assessment:
 
 ```text
-AI Production Readiness Score: 73 / 100
-Risk level: Medium risk / Production only with additional controls
+Document Ingestion Quality Monitor
+Score: 73 / 100
+Risk: Medium risk - Production only with additional controls
+Production gate: No critical production blockers identified.
 
-Top risks
+Top Risks
 1. WARNING: Retrieval evaluation is incomplete.
 2. WARNING: Rollback plan is not fully defined.
 3. WARNING: Incident ownership is not fully defined.
@@ -77,10 +82,14 @@ aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style exe
 aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style engineering --output reports/document-ingestion-engineering.md
 aipr explain examples/document-ingestion-quality-monitor/usecase.yaml
 aipr explain examples/document-ingestion-quality-monitor/usecase.yaml --category evals
+aipr remediation examples/document-ingestion-quality-monitor/usecase.yaml
+aipr schema --output schema.json
+aipr compare examples/supplier-risk-intake-screener/usecase.yaml examples/research-knowledge-base-curator/usecase.yaml
 aipr templates
 ```
 
 Use `aipr validate --strict` in CI when missing ownership, business context, users, or data sources should fail the check.
+Use `aipr assess --min-score 75 --fail-on-critical` when a delivery pipeline should fail weak or blocked assessments.
 
 Available starter templates:
 
@@ -103,6 +112,31 @@ Reports can be exported in three styles:
 | `balanced` | Mixed product and delivery reviews | Executive summary, score breakdown, findings, next steps |
 
 `balanced` is the default.
+
+## Machine-Readable and CI Output
+
+Several commands support JSON output for automation:
+
+```bash
+aipr assess usecase.yaml --format json
+aipr remediation usecase.yaml --format json
+aipr compare before.yaml after.yaml --format json
+```
+
+JSON shapes for these commands are documented in `docs/14-json-output-contracts.md` and are intended to remain stable within a minor version.
+
+Export the schema for editors and CI tooling:
+
+```bash
+aipr schema --output schema.json
+```
+
+Useful CI gates:
+
+```bash
+aipr validate usecase.yaml --strict
+aipr assess usecase.yaml --min-score 75 --fail-on-critical
+```
 
 ## Scoring Model
 
@@ -145,9 +179,15 @@ This kit turns those concerns into a repeatable assessment that creates a better
 - `.github/workflows/ci.yml` - GitHub Actions checks for lint, tests, and package build
 - `CONTRIBUTING.md` - contribution guidelines
 - `CODE_OF_CONDUCT.md` - community expectations
+- `CHANGELOG.md` - release notes
 - `docs/` - practical templates and checklists
 - `docs/11-usecase-yaml-schema.md` - schema reference for `usecase.yaml`
 - `docs/12-github-action-usage.md` - example CI usage for downstream repositories
+- `docs/13-running-ai-readiness-review.md` - practical review process guide
+- `docs/14-json-output-contracts.md` - stable JSON shapes for automation
+- `docs/15-scoring-rationale.md` - scoring rationale and production gate rules
+- `docs/16-release-process.md` - local release checks and future publishing notes
+- `docs/17-github-action-wrapper-plan.md` - planned dedicated GitHub Action interface
 - `examples/` - synthetic AI workflow examples with generated reports
 - `tests/` - focused tests for scoring, CLI behavior, and report generation
 
@@ -172,7 +212,7 @@ uv --cache-dir .uv-cache build
 ## Roadmap
 
 - v0.1: CLI, scoring model, Markdown reports, docs, examples
-- v0.2: richer templates and remediation guidance
+- v0.2: JSON output, CI gates, remediation command, schema export, comparison, blank starter
 - v0.3: GitHub Action for readiness checks in delivery workflows
 - v0.4: lightweight web dashboard
 - v0.5: team-level AI maturity assessment

@@ -166,3 +166,11 @@ aipr validate usecase.yaml --strict
 ```
 
 Use `--strict` when completeness warnings should fail CI.
+
+## Export JSON Schema
+
+Use the schema command when you want editor support, downstream validation, or CI tooling:
+
+```bash
+aipr schema --output schema.json
+```

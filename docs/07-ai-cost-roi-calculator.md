@@ -2,6 +2,8 @@
 
 Use this worksheet to estimate whether an AI workflow has a credible value case.
 
+Use workflow-level economics instead of model-call economics alone. The real cost of production AI often includes review time, rework, support, monitoring, retrieval infrastructure, and incident handling.
+
 ## Inputs
 
 - Monthly users:
@@ -34,3 +36,5 @@ net_value = gross_value - total_cost
 ## Decision Notes
 
 Track value by workflow, not only by model call. The expensive part may be review time, failures, rework, or operational support rather than token cost.
+
+Pair this worksheet with `aipr assess` so value, cost, and production controls are reviewed together.

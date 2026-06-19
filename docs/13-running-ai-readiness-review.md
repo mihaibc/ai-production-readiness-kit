@@ -2,6 +2,8 @@
 
 Use this guide when a team wants to decide whether an AI workflow is ready for pilot, controlled production, or broader rollout.
 
+The review should produce a decision, not just a score. A good session turns evidence into launch posture, remediation owners, and clear follow-up work.
+
 ## Who Should Attend
 
 - Product or workflow owner
@@ -64,3 +66,5 @@ At the end of the review, the team should have:
 - Prioritized remediation plan
 - Named owner for each action
 - Clear decision: demo, pilot, controlled production, or blocked
+
+Store the final report with the release, architecture decision record, or delivery ticket when auditability matters.

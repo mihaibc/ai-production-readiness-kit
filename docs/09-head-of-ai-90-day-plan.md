@@ -1,5 +1,7 @@
 # Head of AI 90-Day Plan
 
+Use this plan to move from scattered AI experiments to a repeatable production-readiness operating model. It is written for leaders who need portfolio visibility without slowing every team with heavyweight process.
+
 ## Days 1-30: Baseline
 
 - Inventory active AI use cases.
@@ -23,3 +25,7 @@
 - Create reusable patterns for RAG, evals, approvals, and observability.
 - Train teams on the production readiness process.
 - Publish a regular AI portfolio review.
+
+## Success Signal
+
+By day 90, teams should be able to show which AI workflows are in demo, pilot, controlled production, or blocked status, and why.

@@ -1,13 +1,14 @@
 # AI Production Readiness Report: Research Knowledge Base Curator
 
-## Executive Summary
+## Decision Snapshot
 
 Score: 91 / 100  
 Risk level: Strong production readiness - Ready for scaled production governance.
 Production gate: No critical production blockers identified.
 
-Internal workflow that ingests synthetic research notes, classifies topics, identifies stale content, recommends archive or review actions, and maintains a searchable knowledge base for research and product teams.
+## Workflow Summary
 
+Internal workflow that ingests synthetic research notes, classifies topics, identifies stale content, recommends archive or review actions, and maintains a searchable knowledge base for research and product teams.
 
 ## Score Breakdown
 
@@ -32,7 +33,7 @@ No critical findings were identified.
 
 No warnings were identified.
 
-## Recommended Remediation Plan
+## Priority Remediation
 
 1. Improve model architecture before expanding production use.
 2. Improve governance and security before expanding production use.
@@ -49,3 +50,7 @@ No warnings were identified.
 | External output | False |
 | Data classification | internal |
 | Uses RAG | True |
+
+## Review Guidance
+
+Use this report as a launch-readiness artifact. Critical findings should block production unless a senior owner formally accepts the risk. Warnings should become tracked remediation work before broader rollout.

@@ -4,7 +4,16 @@ This synthetic example assesses an internal assistant that answers questions fro
 
 It is useful because policy assistants can appear low risk while still influencing employee behavior, approvals, or compliance interpretation. The example demonstrates why source attribution, audit logs, escalation, and retrieval evaluation matter.
 
-Production-readiness risks demonstrated:
+## What Developers Should Notice
+
+| Area | Why it matters |
+|---|---|
+| RAG grounding | Answers need citations that map to accessible source material. |
+| Escalation | Ambiguous or compliance-sensitive questions need reviewer paths. |
+| Auditability | Policy interpretation often needs traceable decisions and source context. |
+| Retrieval evaluation | A confident answer is not useful if retrieval chose the wrong policy. |
+
+## Production-Readiness Risks
 
 - RAG answer grounding and source citations
 - compliance-style review and escalation
@@ -12,4 +21,13 @@ Production-readiness risks demonstrated:
 - partial retrieval evaluation coverage
 - governance requirements for policy-sensitive guidance
 
-Expected risk profile: medium-high. The workflow has good controls, but incomplete retrieval evaluation and operational ownership should prevent casual expansion.
+## Expected Risk Profile
+
+Medium-high. The workflow has good controls, but incomplete retrieval evaluation and operational ownership should prevent casual expansion.
+
+## Try It
+
+```bash
+aipr assess examples/policy-compliance-faq-assistant/usecase.yaml
+aipr report examples/policy-compliance-faq-assistant/usecase.yaml --output examples/policy-compliance-faq-assistant/report.md
+```

@@ -1,28 +1,29 @@
 # Contributing
 
-Thank you for considering a contribution to AI Production Readiness Kit.
+Thanks for helping improve AI Production Readiness Kit.
 
-This project is meant to help teams assess whether AI workflows are ready for production. Good contributions make the toolkit more practical, clearer, safer, or easier to adopt.
+This project is for teams that want practical, deterministic checks before AI workflows reach real users. The best contributions make the toolkit clearer, safer, easier to automate, or more useful in production delivery reviews.
 
 ## Good Contribution Areas
 
-- Improve scoring clarity or explainability.
-- Add useful documentation, examples, or templates.
-- Improve validation and error messages.
-- Add tests for CLI behavior, scoring, report generation, or schema validation.
+- Improve scoring clarity, rationale, or explainability.
+- Add useful documentation, examples, starter templates, or review guides.
+- Improve validation behavior and error messages.
+- Add tests for CLI behavior, scoring, reports, JSON output, gates, or schema validation.
 - Improve report templates for executive, balanced, or engineering audiences.
-- Improve JSON output, CI gates, schema export, comparison, or remediation workflows.
-- Fix bugs in parsing, scoring, packaging, or CLI commands.
+- Improve remediation, comparison, CI, schema export, or developer workflow support.
+- Fix bugs in parsing, scoring, packaging, or command behavior.
 
-## Contribution Principles
+## Project Principles
 
-- Keep the tool deterministic. Do not add an LLM API dependency to scoring or validation.
-- Use synthetic and generic examples only.
+- Keep scoring and validation deterministic.
+- Do not add an LLM API dependency to the scoring path.
+- Use synthetic, generic examples only.
 - Do not include employer, customer, personal, confidential, or proprietary information.
-- Prefer small, focused changes.
-- Keep CLI output useful for both local use and CI.
+- Prefer small, focused pull requests with clear motivation.
+- Keep CLI output useful for local developers and CI systems.
 - Add or update tests when behavior changes.
-- Update documentation when user-facing commands, fields, or outputs change.
+- Update documentation for user-facing commands, fields, reports, or outputs.
 
 ## Local Setup
 
@@ -32,7 +33,7 @@ cd ai-production-readiness-kit
 uv sync --extra dev
 ```
 
-Run checks:
+Run the standard checks:
 
 ```bash
 uv run ruff check .
@@ -40,7 +41,7 @@ uv run pytest
 uv build
 ```
 
-If your environment has restricted cache permissions, use:
+If your environment has restricted cache permissions:
 
 ```bash
 uv --cache-dir .uv-cache run ruff check .
@@ -50,7 +51,7 @@ uv --cache-dir .uv-cache build
 
 ## Working With Examples
 
-Examples should be realistic enough to teach production-readiness thinking, but generic enough to be safe for public use.
+Examples should be realistic enough to teach production-readiness thinking and generic enough to publish safely.
 
 Each example should include:
 
@@ -64,7 +65,7 @@ Generate a balanced report:
 uv run aipr report examples/document-ingestion-quality-monitor/usecase.yaml --style balanced --output examples/document-ingestion-quality-monitor/report.md
 ```
 
-When adding a new starter example, also add the matching packaged template under:
+When adding a new starter example, also add the matching packaged template:
 
 ```text
 aipr/starter_templates/<template-name>/usecase.yaml
@@ -74,28 +75,32 @@ aipr/starter_templates/<template-name>/usecase.yaml
 
 Before opening a pull request:
 
-- Run `uv run ruff check .`
-- Run `uv run pytest`
-- Run `uv build`
+- Run `uv run ruff check .`.
+- Run `uv run pytest`.
+- Run `uv build`.
 - Update docs for user-facing behavior changes.
 - Keep examples synthetic and generic.
-- Confirm no generated build artifacts, caches, or local environment files are included.
+- Confirm generated reports are refreshed when report templates or examples change.
+- Confirm build artifacts, caches, and local environment files are not included.
 
 ## Commit Style
 
-Use concise, descriptive commit messages, for example:
+Use concise, descriptive commit messages:
 
 ```text
-Add use case validation command
+Add strict validation for readiness owners
 Improve engineering report scoring detail
-Replace examples with generic readiness scenarios
+Refresh synthetic supplier-risk example
 ```
 
-## Questions and Ideas
+## Issue Quality
 
-If you are unsure whether an idea fits, open an issue with:
+When opening an issue, include:
 
 - the problem you want to solve
 - who it helps
 - the proposed behavior or documentation change
+- commands, YAML snippets, or generated output when relevant
 - any tradeoffs or risks
+
+Do not include confidential data in issues, examples, screenshots, logs, or reports.

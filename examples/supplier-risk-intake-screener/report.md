@@ -1,13 +1,14 @@
 # AI Production Readiness Report: Supplier Risk Intake Screener
 
-## Executive Summary
+## Decision Snapshot
 
 Score: 52 / 100  
 Risk level: High risk - Pilot only until critical controls are resolved.
 Production gate: Critical findings block production readiness even when the numeric score is higher.
 
-AI-assisted workflow that reviews synthetic supplier intake forms and public-style risk indicators to prepare an initial risk checklist for procurement review. The workflow supports human decision-making and does not approve suppliers.
+## Workflow Summary
 
+AI-assisted workflow that reviews synthetic supplier intake forms and public-style risk indicators to prepare an initial risk checklist for procurement review. The workflow supports human decision-making and does not approve suppliers.
 
 ## Score Breakdown
 
@@ -39,7 +40,7 @@ AI-assisted workflow that reviews synthetic supplier intake forms and public-sty
 6. Token, latency, or error tracking is incomplete.
 7. No formal golden evaluation dataset is defined.
 
-## Recommended Remediation Plan
+## Priority Remediation
 
 1. Require approval by a named reviewer role before external use.
 2. Create a golden retrieval dataset and track source coverage, misses, and wrong-document retrieval.
@@ -56,3 +57,7 @@ AI-assisted workflow that reviews synthetic supplier intake forms and public-sty
 | External output | True |
 | Data classification | confidential |
 | Uses RAG | True |
+
+## Review Guidance
+
+Use this report as a launch-readiness artifact. Critical findings should block production unless a senior owner formally accepts the risk. Warnings should become tracked remediation work before broader rollout.

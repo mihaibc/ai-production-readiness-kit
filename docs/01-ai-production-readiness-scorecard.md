@@ -2,6 +2,8 @@
 
 Use this scorecard before moving an AI workflow from demo to pilot or production.
 
+The scorecard gives product, engineering, risk, and operations teams a shared language for launch readiness. Use it as an intake gate, a pre-pilot review, or a release checklist when prompts, models, tools, retrieval sources, or policies change.
+
 | Category | Points | Production question |
 |---|---:|---|
 | Business value and workflow fit | 10 | Does this solve a real workflow problem with measurable impact? |
@@ -34,3 +36,5 @@ That means a workflow can keep its numeric score, but unresolved critical findin
 ## Review Rhythm
 
 Run the scorecard at intake, before pilot, before launch, and after material model, data, prompt, policy, or workflow changes.
+
+For CI usage, store the workflow definition as `usecase.yaml` and run `aipr validate --strict` plus `aipr assess --fail-on-critical`.

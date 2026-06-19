@@ -2,6 +2,8 @@
 
 Use this when deciding whether an AI workflow needs human review.
 
+Human review should be designed as part of the workflow, not bolted on after risk appears. This guide helps teams decide where approval, review, escalation, and reviewer accountability are required.
+
 ## Require Human Approval When
 
 - The output goes to customers, partners, regulators, or the public.
@@ -23,3 +25,7 @@ Use this when deciding whether an AI workflow needs human review.
 - Who handles user disputes or corrections?
 - What confidence, category, or policy threshold triggers escalation?
 - How are reviewer decisions captured for future evals?
+
+## Implementation Note
+
+In `usecase.yaml`, capture this decision under `human_in_the_loop`. External, regulated, financial, legal, safety, access, or compliance-impacting outputs should have explicit approval before use.

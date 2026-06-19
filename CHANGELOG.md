@@ -4,6 +4,11 @@ All notable changes to this project will be documented here.
 
 ## Unreleased
 
+### Documentation
+
+- Refreshed the README with repository health badges, clearer quickstart guidance, a command map, starter-template overview, and developer-focused navigation.
+- Polished contributor, implementation, example, report, and issue-template documentation for a more professional open-source experience.
+
 ### Added
 
 - JSON output support for assessment, remediation, and comparison workflows.
@@ -16,8 +21,6 @@ All notable changes to this project will be documented here.
 
 - Refactored CLI internals into dedicated rendering, gate, remediation, and comparison modules.
 - Expanded remediation output with priority, effort, category, severity, action, and rationale metadata.
-
-### Documentation
 
 - Added guidance for running AI readiness reviews.
 - Added stable JSON output contract documentation.

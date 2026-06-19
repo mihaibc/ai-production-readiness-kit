@@ -2,6 +2,8 @@
 
 Production AI workflows need enough visibility to detect quality, reliability, and cost problems.
 
+Use this checklist when preparing a pilot, production launch, incident review, or model/prompt change. The goal is to answer what changed, who was affected, and whether quality, latency, or cost moved in the wrong direction.
+
 ## Minimum Signals
 
 - Request volume
@@ -25,3 +27,5 @@ Production AI workflows need enough visibility to detect quality, reliability, a
 ## Launch Gate
 
 Do not expand production usage until the team can answer: what changed, who was affected, how much it cost, and whether quality got worse.
+
+Observability does not need to start as a large platform. It does need stable identifiers for workflow, model, prompt version, retrieval source, user group, and outcome.

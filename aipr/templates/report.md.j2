@@ -1,13 +1,14 @@
 # AI Production Readiness Report: {{ usecase.name }}
 
-## Executive Summary
+## Decision Snapshot
 
 Score: {{ assessment.total_score }} / 100  
 Risk level: {{ assessment.risk_level }} - {{ assessment.risk_summary }}.
 Production gate: {{ assessment.production_gate }}
 
-{{ usecase.description }}
+## Workflow Summary
 
+{{ usecase.description }}
 ## Score Breakdown
 
 | Category | Score |
@@ -38,7 +39,7 @@ No critical findings were identified.
 No warnings were identified.
 {% endif %}
 
-## Recommended Remediation Plan
+## Priority Remediation
 
 {% for step in assessment.recommended_next_steps -%}
 {{ loop.index }}. {{ step }}
@@ -53,3 +54,7 @@ No warnings were identified.
 | External output | {{ usecase.business.external_output }} |
 | Data classification | {{ usecase.data.data_classification }} |
 | Uses RAG | {{ usecase.rag.uses_rag }} |
+
+## Review Guidance
+
+Use this report as a launch-readiness artifact. Critical findings should block production unless a senior owner formally accepts the risk. Warnings should become tracked remediation work before broader rollout.

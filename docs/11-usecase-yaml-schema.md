@@ -2,6 +2,8 @@
 
 `usecase.yaml` describes one AI workflow so the toolkit can validate, score, and report on production readiness. The schema is deterministic and does not send data to any model provider.
 
+Keep each file close to the workflow it governs. A pull request that changes prompts, retrieval sources, model behavior, user access, or launch controls should update the matching `usecase.yaml`.
+
 ## Accepted Status Values
 
 Most control fields accept:
@@ -174,3 +176,5 @@ Use the schema command when you want editor support, downstream validation, or C
 ```bash
 aipr schema --output schema.json
 ```
+
+Use the exported schema with editor integrations or repository policy checks when multiple teams maintain readiness files.

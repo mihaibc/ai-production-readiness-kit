@@ -2,6 +2,8 @@
 
 The CLI supports JSON output for automation and CI integrations. Fields documented here are intended to remain stable within the same minor version. Patch releases may add fields, but should not remove or rename documented fields.
 
+Use these contracts for pull-request gates, dashboards, quality checks, score history, and internal developer tooling.
+
 ## Assessment JSON
 
 Command:
@@ -144,3 +146,5 @@ Notes:
 - `score_delta` is `after.score - before.score`.
 - `categories` is ordered by the scoring model.
 - Finding changes compare finding messages, not internal identifiers.
+
+Consumers should ignore unknown fields so patch releases can add metadata without breaking integrations.

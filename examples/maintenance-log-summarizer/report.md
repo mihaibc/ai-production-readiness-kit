@@ -1,13 +1,14 @@
 # AI Production Readiness Report: Maintenance Log Summarizer
 
-## Executive Summary
+## Decision Snapshot
 
 Score: 72 / 100  
 Risk level: Medium risk - Production only with additional controls.
 Production gate: No critical production blockers identified.
 
-AI-assisted workflow that summarizes synthetic equipment maintenance logs, detects recurring issue patterns, and prepares review notes for maintenance engineers before any operational action is taken.
+## Workflow Summary
 
+AI-assisted workflow that summarizes synthetic equipment maintenance logs, detects recurring issue patterns, and prepares review notes for maintenance engineers before any operational action is taken.
 
 ## Score Breakdown
 
@@ -35,7 +36,7 @@ No critical findings were identified.
 3. Incident ownership is not fully defined.
 4. No formal golden evaluation dataset is defined.
 
-## Recommended Remediation Plan
+## Priority Remediation
 
 1. Expand retrieval evals to cover source coverage, misses, and wrong-document retrieval.
 2. Document how to disable the workflow, revert prompts/models, and notify affected users.
@@ -52,3 +53,7 @@ No critical findings were identified.
 | External output | False |
 | Data classification | internal |
 | Uses RAG | True |
+
+## Review Guidance
+
+Use this report as a launch-readiness artifact. Critical findings should block production unless a senior owner formally accepts the risk. Warnings should become tracked remediation work before broader rollout.

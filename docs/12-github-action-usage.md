@@ -2,6 +2,8 @@
 
 Use the toolkit in another repository to validate and assess AI workflow definitions during pull requests.
 
+This workflow keeps readiness checks near the code, prompts, retrieval configuration, or workflow definitions they govern. It is designed to fail fast when a change weakens controls or leaves critical findings unresolved.
+
 ## Example Workflow
 
 ```yaml
@@ -62,3 +64,5 @@ When the package is published to PyPI later, the install step can change to `uv 
 - Use `aipr remediation usecase.yaml --format json` when a workflow should collect recommended actions.
 - Treat critical findings as launch blockers unless the risk is formally accepted.
 - Store generated reports as release artifacts only when the team needs review evidence; otherwise, use CLI output in CI.
+
+For repositories with many workflows, start with warning-only adoption and move to blocking gates once owners have updated baseline `usecase.yaml` files.

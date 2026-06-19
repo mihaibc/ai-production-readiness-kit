@@ -2,6 +2,8 @@
 
 Use this as a lightweight governance starting point for production AI workflows.
 
+This charter is intentionally small. It gives teams enough structure to name decision rights, required controls, launch approvals, and operational accountability without creating a heavy governance program first.
+
 ## Ownership
 
 - Executive owner:
@@ -28,3 +30,7 @@ Use this as a lightweight governance starting point for production AI workflows.
 - Who can approve production launch?
 - Who can approve model or provider changes?
 - Who can pause or roll back the workflow?
+
+## Operating Rhythm
+
+Review the charter quarterly and whenever a workflow changes model provider, data source, access pattern, external-output behavior, or regulatory scope.

@@ -26,7 +26,7 @@ def template_environment() -> Environment:
 
 def render_report(assessment: Assessment, style: ReportStyle = "balanced") -> str:
     template = template_environment().get_template(REPORT_TEMPLATES[style])
-    return template.render(assessment=assessment, usecase=assessment.usecase)
+    return template.render(assessment=assessment, usecase=assessment.usecase).rstrip() + "\n"
 
 
 def write_report(assessment: Assessment, output: Path, style: ReportStyle = "balanced") -> Path:

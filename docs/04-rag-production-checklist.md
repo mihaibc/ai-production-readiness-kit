@@ -2,6 +2,8 @@
 
 RAG is production-ready when retrieval is reliable, permission-aware, fresh, and observable.
 
+Use this checklist for assistants, search workflows, knowledge-base tools, document question answering, and any system where generated output depends on retrieved context.
+
 ## Retrieval Quality
 
 - Chunking strategy is documented.
@@ -29,3 +31,7 @@ RAG is production-ready when retrieval is reliable, permission-aware, fresh, and
 - Source refresh cadence is documented.
 - Stale documents can be detected.
 - Retired documents are removed from retrieval.
+
+## Developer Handoff
+
+Treat retrieval quality as a separately testable subsystem. A strong generation model cannot compensate for missing access controls, stale documents, or unmeasured retrieval misses.

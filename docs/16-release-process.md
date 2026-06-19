@@ -2,6 +2,8 @@
 
 This project does not publish to PyPI yet. Releases are currently GitHub-first, with install instructions pointing to the repository.
 
+The release process should keep the CLI, documentation, generated reports, JSON contracts, and examples in sync.
+
 ## Local Checks
 
 Run the full local verification set before tagging:
@@ -50,3 +52,5 @@ When PyPI publishing is added, prefer trusted publishing from GitHub Actions ins
 - require repository maintainer approval for release environments
 
 Do not add publishing automation until package naming, release ownership, and credentials policy are settled.
+
+After PyPI publishing is enabled, update the README, GitHub Action usage docs, and release checklist in the same pull request.

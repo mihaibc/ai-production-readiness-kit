@@ -8,7 +8,7 @@ assignees: ""
 
 ## What happened?
 
-Describe the bug clearly.
+Describe the bug clearly. Include the command, input file, and workflow you were trying to run.
 
 ## Command or file
 
@@ -24,6 +24,10 @@ What did you expect to happen?
 
 What happened instead?
 
+## Minimal reproduction
+
+Provide the smallest synthetic `usecase.yaml` or command sequence that reproduces the issue. Do not include confidential data.
+
 ## Environment
 
 - OS:
@@ -33,4 +37,4 @@ What happened instead?
 
 ## Additional context
 
-Add logs, YAML snippets, or screenshots if useful. Do not include confidential data.
+Add logs, YAML snippets, or screenshots if useful. Redact tokens, customer names, employer data, and sensitive workflow details.

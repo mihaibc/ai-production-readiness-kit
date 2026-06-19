@@ -1,5 +1,7 @@
 # AI Use Case Intake Template
 
+Use this template before implementation starts. It helps a team define the workflow boundary, expected value, data sensitivity, launch controls, and operational ownership before an AI prototype turns into production scope.
+
 ## Use Case
 
 - Name:
@@ -38,3 +40,7 @@
 - What tests must pass before launch?
 - Who owns incidents and rollback?
 - How will cost, latency, and failures be monitored?
+
+## Handoff Notes
+
+Convert the completed intake into a `usecase.yaml` file once the workflow has enough detail to validate and score. Keep the intake updated when the workflow changes materially.

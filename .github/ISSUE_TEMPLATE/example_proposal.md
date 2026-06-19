@@ -8,7 +8,7 @@ assignees: ""
 
 ## Example idea
 
-Describe the synthetic AI workflow.
+Describe the synthetic AI workflow and the user or team it represents.
 
 ## What should it demonstrate?
 
@@ -29,6 +29,10 @@ Choose one:
 - Medium-high
 - High
 
+## Expected learning outcome
+
+What should readers understand after reviewing this example?
+
 ## Safety check
 
-Confirm the example is generic, synthetic, and not based on confidential work.
+Confirm the example is generic, synthetic, and not based on confidential customer, employer, personal, or regulated data.

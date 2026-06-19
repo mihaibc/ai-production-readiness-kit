@@ -2,6 +2,8 @@
 
 The scorecard is deterministic and intentionally simple. It is designed to create a consistent readiness conversation, not to replace security, legal, privacy, or architecture review.
 
+The model favors transparent controls over opaque maturity claims. Each category exists because production AI systems fail through workflow, data, governance, operations, or adoption gaps as often as they fail through model behavior.
+
 The total score is 100 points across ten categories. Boolean fields receive full credit when `true` and no credit when `false`. Fields that accept `partial` receive half credit when partially implemented. `unknown` is treated as not ready because an unknown control cannot be relied on in production.
 
 ## Category Allocation
@@ -75,3 +77,5 @@ Critical findings are reserved for controls that can block responsible productio
 Warnings identify meaningful gaps that should be planned before scale, but do not always block a controlled pilot.
 
 Info items are next-step suggestions that improve maturity or adoption.
+
+When changing scoring behavior, update this rationale, the schema docs, tests, generated reports, and JSON contract notes if output semantics change.
